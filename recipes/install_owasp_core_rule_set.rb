@@ -22,7 +22,7 @@ end
 
 # untar core rule set if tarfile is updated
 execute "untar_core_rule_set" do
-  command "tar -xzf --strip 1 #{tarfile} -C #{node[:mod_security][:crs][:rules_root_dir]}"
+  command "tar -xzf #{tarfile} -C #{node[:mod_security][:crs][:rules_root_dir]} --strip 1"
   action :nothing
   subscribes :run, resources(:remote_file => tarfile), :immediately
 end

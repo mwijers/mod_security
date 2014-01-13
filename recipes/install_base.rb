@@ -35,7 +35,7 @@ if node[:mod_security][:from_source]
                                   else
                                     'apache2-prefork-dev'
                                   end
-    %W( #{apache_development_package} libapr1-dev libcurl4-gnutls-dev ).each do |pkg|
+    %W( #{apache_development_package} libxml2-dev libcurl3-dev ).each do |pkg|
       package pkg do
         action :upgrade
       end

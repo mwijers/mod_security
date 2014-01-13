@@ -92,7 +92,7 @@ if node[:mod_security][:from_source]
   # or otherwise not depend on the source dir always being there
   link "#{node[:mod_security][:dir]}/unicode.mapping" do
       to "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}/unicode.mapping"
-      action (flag ? :create : :delete )
+      action :create
       notifies :restart, resources(:service => "apache2"), :delayed
   end
 

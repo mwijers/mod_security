@@ -4,7 +4,7 @@ case platform
 when "redhat","centos","scientific","fedora","suse","arch"
   default[:mod_security][:dir]                 = "/etc/httpd/mod_security"
 else
-  default[:mod_security][:dir]                 = "/etc/modsecurity"
+  default[:mod_security][:dir]                 = "/etc/apache2/mod_security"
 end
 
 # mod_security locations

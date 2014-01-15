@@ -44,13 +44,28 @@ if node[:mod_security][:from_source]
     recursive true
   end
 
-  source_code = "#{node[:mod_security][:dir]}/source/#{node[:mod_security][:source_file]}"
-  remote_file source_code do
+  # Download and compile mod_security from source
+
+  source_code_tar_file = "#{node[:mod_security][:dir]}/source/#{node[:mod_security][:source_file]}"
+  remote_file source_code_tar_file do
     action :create_if_missing
     source node[:mod_security][:source_dl_url]
     mode "0644"
     checksum node[:mod_security][:source_checksum] # Not a checksum check for security. Will be unused with create_if_missing.
     backup false
+    notifies :create, "ruby_block[validate_tarball_checksum]", :immediately
+  end
+
+  ruby_block "validate_tarball_checksum" do
+    action :nothing
+    block do
+      require 'digest'
+      checksum = Digest::SHA1.file("#{source_code_tar_file}").hexdigest
+      if checksum != node[:mod_security][:source_checksum]
+        raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}"
+      end
+    end
+    notifies :run, "execute[install_mod_security]", :immediately
   end
 
   bash "install_mod_security" do
@@ -64,7 +79,6 @@ if node[:mod_security][:from_source]
       make mlogc
       make install
     EOH
-    subscribes :run, resources(:remote_file => source_code), :immediately
   end
 
   # setup apache module loading

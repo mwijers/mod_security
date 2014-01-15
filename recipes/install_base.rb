@@ -65,7 +65,7 @@ if node[:mod_security][:from_source]
         raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}"
       end
     end
-    notifies :run, "execute[install_mod_security]", :immediately
+    notifies :run, "bash[install_mod_security]", :immediately
   end
 
   bash "install_mod_security" do

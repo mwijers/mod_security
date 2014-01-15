@@ -60,7 +60,7 @@ if node[:mod_security][:from_source]
     action :nothing
     block do
       require 'digest'
-      checksum = Digest::SHA1.file("#{source_code_tar_file}").hexdigest
+      checksum = Digest::SHA256.file("#{source_code_tar_file}").hexdigest
       if checksum != node[:mod_security][:source_checksum]
         raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}"
       end

@@ -25,7 +25,7 @@ ruby_block "validate_crs_tarball_checksum" do
   action :nothing
   block do
     require 'digest'
-    checksum = Digest::SHA1.file("#{source_code}").hexdigest
+    checksum = Digest::SHA256.file("#{source_code}").hexdigest
     if checksum != node[:mod_security][:crs][:checksum]
       raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:crs][:checksum]}"
     end

@@ -14,7 +14,7 @@ packages.each {|p| package p}
 
 if node[:mod_security][:from_source]
   # COMPILE FROM SOURCE
-  
+
   #install required libs
 
   case node['platform_family']
@@ -49,7 +49,7 @@ if node[:mod_security][:from_source]
     action :create_if_missing
     source node[:mod_security][:source_dl_url]
     mode "0644"
-    #checksum node[:mod_security][:source_checksum] seems to get ignored? FIXME
+    checksum node[:mod_security][:source_checksum] # Not a checksum check for security. Will be unused with create_if_missing.
     backup false
   end
 
@@ -77,7 +77,7 @@ if node[:mod_security][:from_source]
     #backup false
     notifies :restart, resources(:service => "apache2"), :delayed
   end
-  
+
   template "#{node[:apache][:dir]}/mods-enabled/mod-security.conf" do
     owner node[:apache][:user]
     group node[:apache][:group]

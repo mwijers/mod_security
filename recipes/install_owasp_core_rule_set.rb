@@ -16,7 +16,7 @@ remote_file tarfile do
     action :create_if_missing
     source node[:mod_security][:crs][:dl_url]
     mode "0644"
-    #checksum node[:mod_security][crs][:checksum] seems to get ignored? FIXME
+    checksum node[:mod_security][:crs][:checksum] # Not a checksum check for security. Will be unused with create_if_missing.
     backup false
 end
 

@@ -19,7 +19,7 @@ packages.each {|p| package p}
 if node[:mod_security][:from_source]
   # COMPILE FROM SOURCE
 
-  #install required libs
+  # install required libs
 
   case node[:platform_family]
   when 'arch'
@@ -108,7 +108,7 @@ if node[:mod_security][:from_source]
       owner node[:apache][:user]
       group node[:apache][:group]
       mode 0644
-      #backup false
+      # backup false
       notifies :restart, 'service[apache2]', :delayed
     end
   end
@@ -118,7 +118,7 @@ if node[:mod_security][:from_source]
     owner node[:apache][:user]
     group node[:apache][:group]
     mode 0644
-    #backup false
+    # backup false
     notifies :restart, 'service[apache2]', :delayed
   end
 

@@ -58,7 +58,7 @@ default[:mod_security][:data_dir]                     = '/tmp/' # Persistent dat
 
 # audit log attributes
 default[:mod_security][:audit_engine]                 = 'RelevantOnly'
-default[:mod_security][:audit_log_relevant_status]    = '"^(?:5|4(?!04))"' #string within a string
+default[:mod_security][:audit_log_relevant_status]    = '"^(?:5|4(?!04))"' # string within a string
 default[:mod_security][:audit_log_parts]              = 'ABIJDEFHZ'
 default[:mod_security][:audit_log_type]               = 'Serial'
 default[:mod_security][:audit_log]                    = '/var/log/modsec_audit.log'

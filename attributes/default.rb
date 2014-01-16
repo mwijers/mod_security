@@ -136,4 +136,3 @@ default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_45_char_ano
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_55_response_profiling] = false # LUA?
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_56_pvs_checks] = false
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_61_ip_forensics] = false # Unknown action? dependency
-

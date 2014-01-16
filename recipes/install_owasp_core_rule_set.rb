@@ -3,10 +3,10 @@ package "tar" do
   action :install
 end
 
-directory "#{node[:mod_security][:crs][:rules_root_dir]}" do
+directory node[:mod_security][:crs][:rules_root_dir] do
   recursive true
 end
-directory "#{node[:mod_security][:crs][:files]}" do
+directory node[:mod_security][:crs][:files] do
   recursive true
 end
 
@@ -25,7 +25,7 @@ ruby_block "validate_crs_tarball_checksum" do
   action :nothing
   block do
     require 'digest'
-    checksum = Digest::SHA256.file("#{crs_tar_file}").hexdigest
+    checksum = Digest::SHA256.file(crs_tar_file).hexdigest
     if checksum != node[:mod_security][:crs][:checksum]
       raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:crs][:checksum]}"
     end

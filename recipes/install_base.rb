@@ -64,7 +64,7 @@ if node[:mod_security][:from_source]
     action :nothing
     block do
       require 'digest'
-      checksum = Digest::SHA256.file("#{source_code_tar_file}").hexdigest
+      checksum = Digest::SHA256.file(source_code_tar_file).hexdigest
       if checksum != node[:mod_security][:source_checksum]
         raise "Downloaded Tarball Checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}"
       end
@@ -151,12 +151,12 @@ else
   end
 end
 
-directory "#{node[:mod_security][:rules]}" do
+directory node[:mod_security][:rules] do
   recursive true
 end
 
 template "modsecurity.conf" do
-  path "#{node[:mod_security][:base_config]}"
+  path node[:mod_security][:base_config]
   source "modsecurity.conf.erb"
   owner node[:apache][:user]
   group node[:apache][:group]

@@ -13,12 +13,12 @@ end
 # download and install Core Rule Set
 crs_tar_file = "#{node[:mod_security][:crs][:files]}/#{node[:mod_security][:crs][:file_name]}"
 remote_file crs_tar_file do
-    action :create_if_missing
-    source node[:mod_security][:crs][:dl_url]
-    mode '0644'
-    checksum node[:mod_security][:crs][:checksum] # Not a checksum check for security. Will be unused with create_if_missing.
-    backup false
-    notifies :create, 'ruby_block[validate_crs_tarball_checksum]', :immediately
+  action :create_if_missing
+  source node[:mod_security][:crs][:dl_url]
+  mode '0644'
+  checksum node[:mod_security][:crs][:checksum] # Not a checksum check for security. Will be unused with create_if_missing.
+  backup false
+  notifies :create, 'ruby_block[validate_crs_tarball_checksum]', :immediately
 end
 
 ruby_block 'validate_crs_tarball_checksum' do
@@ -59,23 +59,23 @@ node[:mod_security][:crs][:rules].each_pair do |rule_group, rules|
     # deal with data_files
     data_filenames = case rule
                      when 'modsecurity_crs_35_bad_robots'
-                        ['modsecurity_35_scanners.data', 'modsecurity_35_bad_robots.data']
+                       ['modsecurity_35_scanners.data', 'modsecurity_35_bad_robots.data']
                      when 'modsecurity_crs_50_outbound'
-                        ['modsecurity_50_outbound_malware.data', 'modsecurity_50_outbound.data']
+                       ['modsecurity_50_outbound_malware.data', 'modsecurity_50_outbound.data']
                      when 'modsecurity_crs_46_slr_et_joomla_attacks'
-                        ['modsecurity_46_slr_et_joomla.data']
+                       ['modsecurity_46_slr_et_joomla.data']
                      when 'modsecurity_crs_46_slr_et_lfi_attacks'
-                        ['modsecurity_46_slr_et_lfi.data']
+                       ['modsecurity_46_slr_et_lfi.data']
                      when 'modsecurity_crs_46_slr_et_phpbb_attacks'
-                        ['modsecurity_46_slr_et_phpbb.data']
+                       ['modsecurity_46_slr_et_phpbb.data']
                      when 'modsecurity_crs_46_slr_et_rfi_attacks'
-                         ['modsecurity_46_slr_et_rfi.data']
+                       ['modsecurity_46_slr_et_rfi.data']
                      when 'modsecurity_crs_46_slr_et_wordpress_attacks'
-                         ['modsecurity_46_slr_et_wordpress.data']
+                       ['modsecurity_46_slr_et_wordpress.data']
                      when 'modsecurity_crs_46_slr_et_xss_attacks'
-                         ['modsecurity_46_slr_et_xss.data']
+                       ['modsecurity_46_slr_et_xss.data']
                      when 'modsecurity_crs_46_slr_et_sqli_attacks'
-                        ['modsecurity_46_slr_et_sqli.data']
+                       ['modsecurity_46_slr_et_sqli.data']
                      else
                        # why does the crs disappear from the data filenames? why!?
                        ["#{rule.gsub(/crs_/, '')}.data"]

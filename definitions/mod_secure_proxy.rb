@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-define :mod_secure_proxy, :enable => true do
+define :mod_secure_proxy, enable: true do
 
   include_recipe 'apache2'
   include_recipe 'apache2::mod_ssl'

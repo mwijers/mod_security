@@ -23,12 +23,12 @@ describe 'Apache2 with mod_security' do
     expect(port(80)).to be_listening
   end
 
-  it 'apache2 has a mod-security configuration file' do
+  it 'apache2 has a mod_security configuration file' do
     expect(file('/etc/apache2/mods-enabled/mod-security.conf')).to be_file
     expect(file('/etc/apache2/mods-enabled/mod-security.conf')).to contain 'Include "/etc/apache2/mod_security/*.conf"'
   end
 
-  it 'apache2 has a mod-security load file' do
+  it 'apache2 has a mod_security load file' do
     expect(file('/etc/apache2/mods-enabled/mod-security.load')).to be_file
     expect(file('/etc/apache2/mods-enabled/mod-security.load')).to contain 'LoadModule security2_module /usr/local/modsecurity/lib/mod_security2.so'
   end

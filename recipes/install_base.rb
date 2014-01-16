@@ -1,11 +1,15 @@
 # install package common to package and source install
 case node[:platform_family]
 when "rhel","fedora","suse"
-  packages = %w[apr apr-util pcre curl]
+  packages = %w[apr apr-util pcre-devel libxml2-devel curl-devel]
 when "ubuntu","debian"
   packages = %w[libapr1 libaprutil1 libpcre3 libxml2 libcurl3]
 when "arch"
   packages = %w[apr apr-util pcre libxml2 lib32-curl]
+when "freebsd"
+  packages = %w[apr pcre-8.33 libxml2 curl]
+else 
+  raise "#{node[:platform_family]} is not a supported platform"
 end
 packages.each {|p| package p}
 
@@ -97,14 +101,16 @@ if node[:mod_security][:from_source]
 
   # setup apache module loading
   apache_module "unique_id"
-  # we have to manage our own loading
-  template "#{node[:apache][:dir]}/mods-available/mod-security.load" do
-    source "mods/mod-security.load.erb"
-    owner node[:apache][:user]
-    group node[:apache][:group]
-    mode 0644
-    #backup false
-    notifies :restart, resources(:service => "apache2"), :delayed
+
+  if !platform_family?('rhel', 'fedora', 'arch', 'suse', 'freebsd')
+    template "#{node[:apache][:dir]}/mods-available/mod-security.load" do
+      source "mods/mod-security.load.erb"
+      owner node[:apache][:user]
+      group node[:apache][:group]
+      mode 0644
+      #backup false
+      notifies :restart, resources(:service => "apache2"), :delayed
+    end
   end
 
   template "#{node[:apache][:dir]}/mods-available/mod-security.conf" do
@@ -118,6 +124,11 @@ if node[:mod_security][:from_source]
 
   apache_module "mod-security" do
     conf true
+    # The following attributes are only used by the apache2 cookbook on rhel, fedora, arch, suse and freebsd
+    # as it only drop off a .load file for those platforms
+    identifier 'security2_module'
+    module_path '/usr/local/modsecurity/lib/mod_security2.so'
+#    filename 'mod_security2.so'
   end
 
   # FIXME: Should probably not just link this and include it in the cookbook

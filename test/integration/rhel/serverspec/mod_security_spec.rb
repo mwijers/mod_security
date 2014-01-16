@@ -33,6 +33,10 @@ describe 'Apache2 with mod_security' do
     expect(file('/etc/httpd/mods-enabled/mod-security.load')).to contain 'LoadModule security2_module /usr/local/modsecurity/lib/mod_security2.so'
   end
 
+  it 'mod_security module should exist' do
+    expect(file('/usr/local/modsecurity/lib/mod_security2.so')).to be_file
+  end
+
   it 'mod_security is configured' do
     expect(file('/etc/httpd/mod_security/modsecurity.conf')).to be_file
     expect(file('/etc/httpd/mod_security/modsecurity.conf')).to contain 'SecRuleEngine DetectionOnly'

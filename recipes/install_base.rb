@@ -109,7 +109,7 @@ if node[:mod_security][:from_source]
       group node[:apache][:group]
       mode 0644
       #backup false
-      notifies :restart, resources(:service => "apache2"), :delayed
+      notifies :restart, "service[apache2]", :delayed
     end
   end
 
@@ -119,7 +119,7 @@ if node[:mod_security][:from_source]
     group node[:apache][:group]
     mode 0644
     #backup false
-    notifies :restart, resources(:service => "apache2"), :delayed
+    notifies :restart, "service[apache2]", :delayed
   end
 
   apache_module "mod-security" do
@@ -136,7 +136,7 @@ if node[:mod_security][:from_source]
   link "#{node[:mod_security][:dir]}/unicode.mapping" do
       to "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}/unicode.mapping"
       action :create
-      notifies :restart, resources(:service => "apache2"), :delayed
+      notifies :restart, "service[apache2]", :delayed
   end
 
 else
@@ -162,5 +162,5 @@ template "modsecurity.conf" do
   group node[:apache][:group]
   mode 0644
   backup false
-  notifies :restart, resources(:service => "apache2")
+  notifies :restart, "service[apache2]"
 end

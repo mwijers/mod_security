@@ -104,7 +104,7 @@ if node[:mod_security][:from_source]
   # setup apache module loading
   apache_module 'unique_id'
 
-  if !platform_family?('rhel', 'fedora', 'arch', 'suse', 'freebsd')
+  unless platform_family?('rhel', 'fedora', 'arch', 'suse', 'freebsd')
     template "#{node[:apache][:dir]}/mods-available/mod-security.load" do
       source 'mods/mod-security.load.erb'
       owner node[:apache][:user]

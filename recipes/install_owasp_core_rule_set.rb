@@ -28,7 +28,7 @@ ruby_block 'validate_crs_tarball_checksum' do
     checksum = Digest::SHA256.file(crs_tar_file).hexdigest
     if checksum != node[:mod_security][:crs][:checksum]
       Chef::Log.fatal("Downloaded core rule set tarball checksum #{checksum} does not match known checksum #{node[:mod_security][:crs][:checksum]}")
-      fail "Downloaded core rule set tarball did not match known checksum"
+      fail 'Downloaded core rule set tarball did not match known checksum'
     end
   end
   notifies :run, 'execute[untar_core_rule_set]', :immediately

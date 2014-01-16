@@ -10,7 +10,7 @@ when 'freebsd'
   packages = %w[apr pcre-8.33 libxml2 curl]
 else
   Chef::Log.fatal("Unsupported platform: #{node[:platform_family]}.")
-  fail "mod_security cookbook does not support this platform"
+  fail 'mod_security cookbook does not support this platform'
 end
 packages.each { |p| package p }
 
@@ -68,7 +68,7 @@ if node[:mod_security][:from_source]
       checksum = Digest::SHA256.file(source_code_tar_file).hexdigest
       if checksum != node[:mod_security][:source_checksum]
         Chef::Log.fatal("Downloaded source tarball checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}")
-        fail "Downloaded source tarball did not match known checksum"
+        fail 'Downloaded source tarball did not match known checksum'
       end
     end
     notifies :run, 'execute[unpack_mod_security_source_tarball]', :immediately

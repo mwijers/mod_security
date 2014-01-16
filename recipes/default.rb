@@ -17,6 +17,6 @@
 # limitations under the License.
 #
 
-include_recipe "apache2"
-include_recipe "mod_security::install_base"
-include_recipe "mod_security::install_owasp_core_rule_set"
+include_recipe 'apache2'
+include_recipe 'mod_security::install_base'
+include_recipe 'mod_security::install_owasp_core_rule_set'

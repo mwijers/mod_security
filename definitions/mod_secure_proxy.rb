@@ -19,16 +19,16 @@
 
 define :mod_secure_proxy, :enable => true do
 
-  include_recipe "apache2"
-  include_recipe "apache2::mod_ssl"
-  include_recipe "apache2::mod_proxy"
-  include_recipe "apache2::mod_proxy_http"
-  include_recipe "apache2::mod_proxy_connect"
+  include_recipe 'apache2'
+  include_recipe 'apache2::mod_ssl'
+  include_recipe 'apache2::mod_proxy'
+  include_recipe 'apache2::mod_proxy_http'
+  include_recipe 'apache2::mod_proxy_connect'
 
   my_params = params
   
   web_app params[:name] do
-    template "mod_secure_proxy.conf.erb"
+    template 'mod_secure_proxy.conf.erb'
     server_name my_params[:server_name]
     server_aliases my_params[:server_aliases] 
     enable_https(my_params[:enable_https] || false) 
@@ -36,7 +36,7 @@ define :mod_secure_proxy, :enable => true do
 
   if params[:enable_https]
     directory "#{node[:mod_security][:dir]}/ssl"
-    bash "install_self_signed_cert" do
+    bash 'install_self_signed_cert' do
       code <<-EOH
         cd #{node[:mod_security][:dir]}/ssl
         openssl req -new -newkey rsa:2048 -nodes -out server.csr -keyout server.key -subj "/C=us/ST=Illinois/L=Chicago/O=/CN=mycorp"

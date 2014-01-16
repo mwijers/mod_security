@@ -1,8 +1,8 @@
 # install package common to package and source install
 case node[:platform_family]
-when 'rhel','fedora','suse'
+when 'rhel', 'fedora', 'suse'
   packages = %w[apr apr-util pcre-devel libxml2-devel curl-devel]
-when 'ubuntu','debian'
+when 'ubuntu', 'debian'
   packages = %w[libapr1 libaprutil1 libpcre3 libxml2 libcurl3]
 when 'arch'
   packages = %w[apr apr-util pcre libxml2 lib32-curl]
@@ -24,7 +24,7 @@ if node[:mod_security][:from_source]
   case node[:platform_family]
   when 'arch'
     # OH NOES
-  when 'rhel','fedora','suse'
+  when 'rhel', 'fedora', 'suse'
     package 'httpd-devel'
     if node[:platform_version].to_f < 6.0
       package 'curl-devel'
@@ -142,7 +142,7 @@ if node[:mod_security][:from_source]
 else
   # INSTALL FROM PACKAGE
   case node[:platform_family]
-  when 'rhel','fedora','suse'
+  when 'rhel', 'fedora', 'suse'
     package 'mod_security'
   when 'debian'
     package 'libapache-mod-security'

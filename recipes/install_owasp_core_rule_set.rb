@@ -47,9 +47,9 @@ template "#{node[:mod_security][:crs][:rules_root_dir]}/modsecurity_crs_10_setup
   notifies :restart, 'service[apache2]', :delayed
 end
 
-node[:mod_security][:crs][:rules].each_pair do |rule_group,rules|
+node[:mod_security][:crs][:rules].each_pair do |rule_group, rules|
   rule_dir = "#{node[:mod_security][:crs][:rules_root_dir]}/#{rule_group}_rules"
-  rules.each_pair do |rule,flag|
+  rules.each_pair do |rule, flag|
     link "#{node[:mod_security][:crs][:activated_rules]}/#{rule}.conf" do
       to "#{rule_dir}/#{rule}.conf"
       action (flag ? :create : :delete )
@@ -78,7 +78,7 @@ node[:mod_security][:crs][:rules].each_pair do |rule_group,rules|
       ['modsecurity_46_slr_et_sqli.data']
     else
       # why does the crs disappear from the data filenames? why!?
-      ["#{rule.gsub(/crs_/,'')}.data"]
+      ["#{rule.gsub(/crs_/, '')}.data"]
     end
 
     data_filenames.each do |data_filename|

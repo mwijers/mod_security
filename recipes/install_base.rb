@@ -8,7 +8,7 @@ when 'arch'
   packages = %w[apr apr-util pcre libxml2 lib32-curl]
 when 'freebsd'
   packages = %w[apr pcre-8.33 libxml2 curl]
-else 
+else
   raise "#{node[:platform_family]} is not a supported platform"
 end
 packages.each {|p| package p}

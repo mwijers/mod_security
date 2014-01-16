@@ -100,7 +100,7 @@ default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_phpbb_atta
 default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_rfi_attacks] = false
 default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_sqli_attacks] = false
 default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_wordpress_attacks] = false
-default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_xss_attacks] = false 
+default[:mod_security][:crs][:rules][:slr][:modsecurity_crs_46_slr_et_xss_attacks] = false
 
 # Optional rules.
 default[:mod_security][:crs][:rules][:optional][:modsecurity_crs_10_ignore_static] = false
@@ -125,7 +125,7 @@ default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_11_dos_prot
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_11_proxy_abuse] = false # FIXME: hardcoded data file
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_11_slow_dos_protection] = false
 default[:mod_security][:crs][:rules][:experimental][:modsecurity_crs_25_cc_track_pan] = false
-default[:mod_security][:crs][:rules][:experimental]['modsecurity_crs_40_appsensor_detection_point_2.0_setup'] = false # LUA 
+default[:mod_security][:crs][:rules][:experimental]['modsecurity_crs_40_appsensor_detection_point_2.0_setup'] = false # LUA
 default[:mod_security][:crs][:rules][:experimental]['modsecurity_crs_40_appsensor_detection_point_2.1_request_exception'] = false # LUA?
 default[:mod_security][:crs][:rules][:experimental]['modsecurity_crs_40_appsensor_detection_point_2.9_honeytrap'] = false # LUA?
 default[:mod_security][:crs][:rules][:experimental]['modsecurity_crs_40_appsensor_detection_point_3.0_end'] = false # LUA?

@@ -53,7 +53,7 @@ node[:mod_security][:crs][:rules].each_pair do |rule_group, rules|
   rules.each_pair do |rule, flag|
     link "#{node[:mod_security][:crs][:activated_rules]}/#{rule}.conf" do
       to "#{rule_dir}/#{rule}.conf"
-      action (flag ? :create : :delete )
+      action (flag ? :create : :delete)
       notifies :restart, 'service[apache2]', :delayed
     end
 
@@ -85,7 +85,7 @@ node[:mod_security][:crs][:rules].each_pair do |rule_group, rules|
     data_filenames.each do |data_filename|
       link "#{node[:mod_security][:crs][:activated_rules]}/#{data_filename}" do
         to "#{rule_dir}/#{data_filename}"
-        action (flag ? :create : :delete )
+        action (flag ? :create : :delete)
         only_if "test -e #{rule_dir}/#{data_filename}"
         notifies :restart, 'service[apache2]', :delayed
       end

@@ -12,7 +12,7 @@ else
   Chef::Log.fatal("Unsupported platform: #{node[:platform_family]}.")
   fail "mod_security cookbook does not support this platform"
 end
-packages.each {|p| package p}
+packages.each { |p| package p }
 
 # FIXME: ignoring lua for right now
 # make optional in the future

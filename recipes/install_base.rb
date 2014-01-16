@@ -21,12 +21,12 @@ if node[:mod_security][:from_source]
 
   #install required libs
 
-  case node['platform_family']
+  case node[:platform_family]
   when "arch"
     # OH NOES
   when "rhel","fedora","suse"
     package "httpd-devel"
-    if node['platform_version'].to_f < 6.0
+    if node[:platform_version].to_f < 6.0
       package 'curl-devel'
     else
       package 'libcurl-devel'
@@ -34,7 +34,7 @@ if node[:mod_security][:from_source]
       package 'zlib-devel'
     end
   when "debian"
-    apache_development_package =  if %w( worker threaded ).include? node['mod_security']['apache_mpm']
+    apache_development_package =  if %w( worker threaded ).include? node[:mod_security][:apache_mpm]
                                     'apache2-threaded-dev'
                                   else
                                     'apache2-prefork-dev'

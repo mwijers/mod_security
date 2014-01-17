@@ -53,11 +53,15 @@ if node[:mod_security][:from_source]
 
   source_code_tar_file = "#{node[:mod_security][:dir]}/source/#{node[:mod_security][:source_file]}"
   remote_file source_code_tar_file do
-    action :create_if_missing
+    action :create
     source node[:mod_security][:source_dl_url]
     mode '0644'
     checksum node[:mod_security][:source_checksum] # Not a checksum check for security. Will be unused with create_if_missing.
     backup false
+    not_if do
+      # FIXME: Only checks for the existence of the module file. Doesn't check the version of the module is as specified.
+      File.exists?("#{node[:mod_security][:source_module_path]}/#{node[:mod_security][:source_module_name]}")
+    end
     notifies :create, 'ruby_block[validate_tarball_checksum]', :immediately
   end
 
@@ -128,9 +132,8 @@ if node[:mod_security][:from_source]
     conf true
     # The following attributes are only used by the apache2 cookbook on rhel, fedora, arch, suse and freebsd
     # as it only drop off a .load file for those platforms
-    identifier 'security2_module'
-    module_path '/usr/local/modsecurity/lib/mod_security2.so'
-#    filename 'mod_security2.so'
+    identifier node[:mod_security][:source_module_identifier]
+    module_path "#{node[:mod_security][:source_module_path]}/#{node[:mod_security][:source_module_name]}"
   end
 
   # FIXME: Should probably not just link this and include it in the cookbook

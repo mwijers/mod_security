@@ -45,13 +45,9 @@ if node[:mod_security][:from_source]
     end
   end
 
-  directory "#{node[:mod_security][:dir]}/source" do
-    recursive true
-  end
-
   # Download and compile mod_security from source
 
-  source_code_tar_file = "#{node[:mod_security][:dir]}/source/#{node[:mod_security][:source_file]}"
+  source_code_tar_file = "#{Chef::Config[:file_cache_path]}/#{node[:mod_security][:source_file]}"
   remote_file source_code_tar_file do
     action :create
     source node[:mod_security][:source_dl_url]
@@ -81,27 +77,27 @@ if node[:mod_security][:from_source]
   execute 'unpack_mod_security_source_tarball' do
     command "tar -xvzf #{node[:mod_security][:source_file]}"
     action :nothing
-    cwd "#{node[:mod_security][:dir]}/source"
+    cwd Chef::Config[:file_cache_path]
     notifies :run, 'execute[configure_mod_security]', :immediately
   end
 
   execute 'configure_mod_security' do
     command './configure'
-    cwd "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}"
+    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
     action :nothing
     notifies :run, 'execute[make_mod_security]', :immediately
   end
 
   execute 'make_mod_security' do
     command 'make clean && make && make mlogc'
-    cwd "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}"
+    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
     action :nothing
     notifies :run, 'execute[install_mod_security]', :immediately
   end
 
   execute 'install_mod_security' do
     command 'make install'
-    cwd "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}"
+    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
     action :nothing
   end
 

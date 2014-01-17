@@ -30,7 +30,6 @@ default[:mod_security][:crs][:checksum]        = '183c6a912b142ca226c9401b281d5a
 default[:mod_security][:crs][:dl_server]       = 'https://github.com/SpiderLabs/owasp-modsecurity-crs/archive/'
 default[:mod_security][:crs][:dl_url]          = "#{node[:mod_security][:crs][:dl_server]}#{node[:mod_security][:crs][:file_url]}"
 default[:mod_security][:crs][:root_dir]        = "#{node[:mod_security][:dir]}/crs"
-default[:mod_security][:crs][:files]           = "#{node[:mod_security][:crs][:root_dir]}/files"
 default[:mod_security][:crs][:rules_root_dir]  = "#{node[:mod_security][:crs][:root_dir]}/rules"
 default[:mod_security][:crs][:activated_rules] = "#{node[:mod_security][:crs][:rules_root_dir]}/activated_rules"
 

@@ -6,12 +6,9 @@ end
 directory node[:mod_security][:crs][:rules_root_dir] do
   recursive true
 end
-directory node[:mod_security][:crs][:files] do
-  recursive true
-end
 
 # download and install Core Rule Set
-crs_tar_file = "#{node[:mod_security][:crs][:files]}/#{node[:mod_security][:crs][:file_name]}"
+crs_tar_file = "#{Chef::Config[:file_cache_path]}/#{node[:mod_security][:crs][:file_name]}"
 remote_file crs_tar_file do
   action :create
   source node[:mod_security][:crs][:dl_url]

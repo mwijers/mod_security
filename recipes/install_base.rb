@@ -45,6 +45,8 @@ if node[:mod_security][:from_source]
     end
   end
 
+  directory "#{node[:mod_security][:dir]}"
+
   # Download and compile mod_security from source
 
   source_code_tar_file = "#{Chef::Config[:file_cache_path]}/#{node[:mod_security][:source_file]}"

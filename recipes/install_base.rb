@@ -132,10 +132,8 @@ if node[:mod_security][:from_source]
     module_path "#{node[:mod_security][:source_module_path]}/#{node[:mod_security][:source_module_name]}"
   end
 
-  # FIXME: Should probably not just link this and include it in the cookbook
-  # or otherwise not depend on the source dir always being there
-  link "#{node[:mod_security][:dir]}/unicode.mapping" do
-    to "#{node[:mod_security][:dir]}/source/modsecurity-apache_#{node[:mod_security][:source_version]}/unicode.mapping"
+  cookbook_file "unicode.mapping" do
+    path "#{node[:mod_security][:dir]}/unicode.mapping"
     action :create
     notifies :restart, 'service[apache2]', :delayed
   end

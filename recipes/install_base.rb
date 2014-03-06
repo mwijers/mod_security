@@ -54,7 +54,7 @@ if node[:mod_security][:from_source]
       owner node[:apache][:user]
       group node[:apache][:group]
       mode 00755
-      not_if node[:mod_security][:tmp_dir] == '/tmp/'
+      not_if { node[:mod_security][:tmp_dir] == '/tmp/' }
     end
   end
 

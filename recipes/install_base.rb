@@ -45,7 +45,18 @@ if node[:mod_security][:from_source]
     end
   end
 
+  # Create directories
+
   directory "#{node[:mod_security][:dir]}"
+
+  %W( #{node[:mod_security][:tmp_dir]} #{node[:mod_security][:data_dir]} ).each do |dir|
+    directory dir do
+      owner node[:apache][:user]
+      group node[:apache][:group]
+      mode 00755
+      not_if node[:mod_security][:tmp_dir] == '/tmp/'
+    end
+  end
 
   # Download and compile mod_security from source
 

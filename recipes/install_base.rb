@@ -65,7 +65,21 @@ if node[:mod_security][:from_source]
     url node[:mod_security][:source_dl_url]
     version node[:mod_security][:source_version]
     checksum node[:mod_security][:source_checksum]
-    action [ :configure, :install_with_make ]
+    action :configure
+    notifies :run, 'execute[make_mod_security]', :immediately
+  end
+
+  execute 'make_mod_security' do
+    command 'make clean && make && make mlogc'
+    cwd "/usr/local/modsecurity-#{node[:mod_security][:source_version]}"
+    action :nothing
+    notifies :run, 'execute[install_mod_security]', :immediately
+  end
+
+  execute 'install_mod_security' do
+    command 'make install'
+    cwd "/usr/local/modsecurity-#{node[:mod_security][:source_version]}"
+    action :nothing
   end
 
   # setup apache module loading

@@ -30,11 +30,11 @@ describe 'Apache2 with mod_security' do
 
   it 'apache2 should have a mod_security load file' do
     expect(file('/etc/apache2/mods-enabled/mod-security.load')).to be_file
-    expect(file('/etc/apache2/mods-enabled/mod-security.load')).to contain 'LoadModule security2_module /usr/local/modsecurity/lib/mod_security2.so'
+    expect(file('/etc/apache2/mods-enabled/mod-security.load')).to contain 'LoadModule security2_module /usr/local/modsecurity-2.7.7/lib/mod_security2.so'
   end
 
   it 'mod_security module should exist' do
-    expect(file('/usr/local/modsecurity/lib/mod_security2.so')).to be_file
+    expect(file('/usr/local/modsecurity-2.7.7/lib/mod_security2.so')).to be_file
   end
 
   it 'mod_security should be configured' do

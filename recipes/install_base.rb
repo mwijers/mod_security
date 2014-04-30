@@ -95,7 +95,7 @@ if node[:mod_security][:from_source]
   end
 
   execute 'configure_mod_security' do
-    command './configure'
+    command "./configure --prefix=#{node[:mod_security][:source_prefix]}"
     cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
     action :nothing
     notifies :run, 'execute[make_mod_security]', :immediately

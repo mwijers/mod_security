@@ -27,6 +27,8 @@ suites:
     run_list:
       - recipe[mod_security::default]
     attributes:
+      locales:
+        default: 'en_GB.UTF-8'
     excludes:
       - centos-6.5
       - fedora-20

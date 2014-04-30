@@ -11,6 +11,7 @@ depends 'build-essential'
 depends 'apt'
 depends 'yum'
 depends 'ark'
+depends 'locales'
 
 %w{ redhat centos scientific fedora ubuntu debian }.each do |os|
   supports os

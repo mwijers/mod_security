@@ -1,0 +1,25 @@
+DEPENDENCIES
+  mod_security
+    path: .
+    metadata: true
+
+GRAPH
+  apache2 (1.10.4)
+    iptables (>= 0.0.0)
+    logrotate (>= 0.0.0)
+    pacman (>= 0.0.0)
+  apt (2.3.10)
+  ark (0.8.2)
+  build-essential (2.0.0)
+  iptables (0.13.2)
+  locales (0.2.2)
+  logrotate (1.5.0)
+  mod_security (0.1.0)
+    apache2 (>= 0.0.0)
+    apt (>= 0.0.0)
+    ark (>= 0.0.0)
+    build-essential (>= 0.0.0)
+    locales (>= 0.0.0)
+    yum (>= 0.0.0)
+  pacman (1.1.1)
+  yum (3.2.0)

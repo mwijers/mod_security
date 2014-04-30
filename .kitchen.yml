@@ -6,16 +6,16 @@ provisioner:
   name: chef_solo
 
 platforms:
-  - name: ubuntu-12.04
+  - name: ubuntu-13.10
     run_list:
     - recipe[apt::default]
-  - name: ubuntu-13.04
+  - name: ubuntu-14.04
     run_list:
     - recipe[apt::default]
   - name: debian-6.0.8
     run_list:
     - recipe[apt::default]
-  - name: debian-7.2.0
+  - name: debian-7.4
     run_list:
     - recipe[apt::default]
   - name: centos-6.5
@@ -36,10 +36,10 @@ suites:
       - recipe[mod_security::default]
     attributes:
     excludes:
-      - ubuntu-12.04
-      - ubuntu-13.04
+      - ubuntu-13.10
+      - ubuntu-14.04
       - debian-6.0.8
-      - debian-7.2.0
+      - debian-7.4
       - freebsd-9.2
   - name: freebsd
     run_list:
@@ -48,7 +48,7 @@ suites:
     excludes:
       - centos-6.5
       - fedora-20
-      - ubuntu-12.04
-      - ubuntu-13.04
+      - ubuntu-13.10
+      - ubuntu-14.04
       - debian-6.0.8
-      - debian-7.2.0
+      - debian-7.4

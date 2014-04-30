@@ -65,6 +65,7 @@ if node[:mod_security][:from_source]
     url node[:mod_security][:source_dl_url]
     version node[:mod_security][:source_version]
     checksum node[:mod_security][:source_checksum]
+    autoconf_opts ["--prefix=#{node[:mod_security][:source_prefix]}"]
     action :configure
     notifies :run, 'execute[make_mod_security]', :immediately
   end

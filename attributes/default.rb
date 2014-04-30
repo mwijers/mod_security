@@ -18,7 +18,8 @@ default[:mod_security][:source_checksum]       = '11e05cfa6b363c2844c6412a40ff16
 default[:mod_security][:source_dl_server]      = 'https://github.com/SpiderLabs/ModSecurity/releases/download'
 default[:mod_security][:source_dl_url]         = "#{node[:mod_security][:source_dl_server]}/v#{node[:mod_security][:source_version]}/#{node[:mod_security][:source_file]}"
 default[:mod_security][:source_module_name]    = 'mod_security2.so'
-default[:mod_security][:source_module_path]    = "/usr/local/modsecurity/lib" #FIXME: Pass to ./configure script
+default[:mod_security][:source_prefix]         = "/usr/local/modsecurity"
+default[:mod_security][:source_module_path]    = "#{node[:mod_security][:source_prefix]}/lib"
 default[:mod_security][:source_module_identifier] = 'security2_module'
 default[:mod_security][:rules]                 = "#{node[:mod_security][:dir]}/rules"
 

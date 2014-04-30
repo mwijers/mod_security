@@ -10,6 +10,7 @@ depends 'apache2'
 depends 'build-essential'
 depends 'apt'
 depends 'yum'
+depends 'ark'
 
 %w{ redhat centos scientific fedora ubuntu debian }.each do |os|
   supports os

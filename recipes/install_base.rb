@@ -19,6 +19,7 @@ packages.each { |p| package p }
 
 if node[:mod_security][:from_source]
   # COMPILE FROM SOURCE
+  include_recipe 'build-essential::default'
 
   # install required libs
 
@@ -59,59 +60,11 @@ if node[:mod_security][:from_source]
   end
 
   # Download and compile mod_security from source
-
-  source_code_tar_file = "#{Chef::Config[:file_cache_path]}/#{node[:mod_security][:source_file]}"
-  remote_file source_code_tar_file do
-    action :create
-    source node[:mod_security][:source_dl_url]
-    mode '0644'
-    checksum node[:mod_security][:source_checksum] # Not a checksum check for security. Will be unused with create_if_missing.
-    backup false
-    not_if do
-      # FIXME: Only checks for the existence of the module file. Doesn't check the version of the module is as specified.
-      File.exists?("#{node[:mod_security][:source_module_path]}/#{node[:mod_security][:source_module_name]}")
-    end
-    notifies :create, 'ruby_block[validate_tarball_checksum]', :immediately
-  end
-
-  ruby_block 'validate_tarball_checksum' do
-    action :nothing
-    block do
-      require 'digest'
-      checksum = Digest::SHA256.file(source_code_tar_file).hexdigest
-      if checksum != node[:mod_security][:source_checksum]
-        Chef::Log.fatal("Downloaded source tarball checksum #{checksum} does not match known checksum #{node[:mod_security][:source_checksum]}")
-        fail 'Downloaded source tarball did not match known checksum'
-      end
-    end
-    notifies :run, 'execute[unpack_mod_security_source_tarball]', :immediately
-  end
-
-  execute 'unpack_mod_security_source_tarball' do
-    command "tar -xvzf #{node[:mod_security][:source_file]}"
-    action :nothing
-    cwd Chef::Config[:file_cache_path]
-    notifies :run, 'execute[configure_mod_security]', :immediately
-  end
-
-  execute 'configure_mod_security' do
-    command './configure'
-    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
-    action :nothing
-    notifies :run, 'execute[make_mod_security]', :immediately
-  end
-
-  execute 'make_mod_security' do
-    command 'make clean && make && make mlogc'
-    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
-    action :nothing
-    notifies :run, 'execute[install_mod_security]', :immediately
-  end
-
-  execute 'install_mod_security' do
-    command 'make install'
-    cwd "#{Chef::Config[:file_cache_path]}/modsecurity-apache_#{node[:mod_security][:source_version]}"
-    action :nothing
+  ark 'modsecurity' do
+    url node[:mod_security][:source_dl_url]
+    version node[:mod_security][:source_version]
+    checksum node[:mod_security][:source_checksum]
+    action [ :configure, :install_with_make ]
   end
 
   # setup apache module loading

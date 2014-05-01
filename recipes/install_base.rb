@@ -19,7 +19,6 @@ packages.each { |p| package p }
 
 if node[:mod_security][:from_source]
   # COMPILE FROM SOURCE
-  include_recipe 'locales'
   include_recipe 'build-essential::default'
 
   # install required libs

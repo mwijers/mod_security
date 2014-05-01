@@ -25,6 +25,7 @@ platforms:
 suites:
   - name: default
     run_list:
+      - recipe[locales::default]
       - recipe[mod_security::default]
     attributes:
       locales:
